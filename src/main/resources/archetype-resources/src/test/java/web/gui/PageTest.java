@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import ${package}.web.WicketTestApplication;
-import ${package}.web.gui.HomePage;
-import ${package}.web.gui.InfoPage;
-import ${package}.web.gui.SecondPage;
 
 class PageTest {
 

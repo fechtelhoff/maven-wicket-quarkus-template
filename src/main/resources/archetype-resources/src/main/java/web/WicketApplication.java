@@ -90,4 +90,8 @@ public class WicketApplication extends WebApplication {
 		settings.useCdnResources(false);
 		WicketWebjars.install(this, settings);
 	}
+
+	private void mountPages() {
+		WicketApplicationPrettyUrlConfig.getPageClassByPrettyUrlMap().forEach(this::mountPage);
+	}
 }

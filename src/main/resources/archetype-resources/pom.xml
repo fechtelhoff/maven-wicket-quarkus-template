@@ -7,9 +7,10 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
+	<packaging>jar</packaging>
 
 	<name>${artifactId}</name>
-	<description>Simple Apache Wicket Application</description>
+	<description>Simple Apache Wicket Application with Quarkus</description>
 
 	<properties>
 		<!-- Encoding  -->
@@ -32,11 +33,11 @@
 		<!-- Quarkus -->
 		<version.quarkus>3.13.2</version.quarkus>
 
-		<!-- General-->
+		<!-- General -->
 		<version.classgraph>4.8.174</version.classgraph>
 		<version.mapstruct>1.6.0</version.mapstruct>
 
-		<!-- Wicket -->
+		<!-- Wicket & Co. -->
 		<version.wicket>10.1.0</version.wicket>
 		<version.wicketstuff>10.1.1</version.wicketstuff>
 		<version.wicket.bootstrap>7.0.5</version.wicket.bootstrap>
@@ -60,9 +61,9 @@
 		<version.sonar.plugin>4.0.0.4121</version.sonar.plugin>
 		<version.versions.plugin>2.17.1</version.versions.plugin>
 
-		<!-- ================================================================================== -->
+		<!-- =================================================================================== -->
 		<!-- Sonar -->
-		<!-- ================================================================================== -->
+		<!-- =================================================================================== -->
 		<sonar.java.source>${java.version}</sonar.java.source>
 		<sonar.projectName>${project.name}</sonar.projectName>
 		<sonar.dependencyCheck.htmlReportPath>target/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
