@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+
+	<name>${artifactId}</name>
+	<description>Simple Apache Wicket Application</description>
+
+	<properties>
+		<!-- Encoding  -->
+		<project.encoding>UTF-8</project.encoding>
+		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+
+		<!-- Java Version -->
+		<java.version>21</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<!-- Test Execution -->
+		<skipUTs>false</skipUTs>
+		<skipITs>true</skipITs>
+
+		<!-- =================================================================================== -->
+		<!-- Dependencies -->
+		<!-- =================================================================================== -->
+		<!-- Quarkus -->
+		<version.quarkus>3.13.2</version.quarkus>
+
+		<!-- General-->
+		<version.classgraph>4.8.174</version.classgraph>
+		<version.mapstruct>1.6.0</version.mapstruct>
+
+		<!-- Wicket -->
+		<version.wicket>10.1.0</version.wicket>
+		<version.wicketstuff>10.1.1</version.wicketstuff>
+		<version.wicket.bootstrap>7.0.5</version.wicket.bootstrap>
+		<version.bootstrap-icons>1.11.3</version.bootstrap-icons>
+
+		<!-- =================================================================================== -->
+		<!-- Plugins -->
+		<!-- =================================================================================== -->
+		<!-- Maven Plugins -->
+		<version.compiler.plugin>3.13.0</version.compiler.plugin>
+		<version.failsafe.plugin>3.3.1</version.failsafe.plugin>
+		<version.javadoc.plugin>3.8.0</version.javadoc.plugin>
+		<version.resources.plugin>3.3.1</version.resources.plugin>
+		<version.source.plugin>3.3.1</version.source.plugin>
+		<version.surefire.plugin>3.3.1</version.surefire.plugin>
+
+		<!-- Other Plugins -->
+		<version.gitflow.plugin>1.21.0</version.gitflow.plugin>
+		<version.jacoco.plugin>0.8.12</version.jacoco.plugin>
+		<version.owasp.plugin>10.0.3</version.owasp.plugin>
+		<version.sonar.plugin>4.0.0.4121</version.sonar.plugin>
+		<version.versions.plugin>2.17.1</version.versions.plugin>
+
+		<!-- ================================================================================== -->
+		<!-- Sonar -->
+		<!-- ================================================================================== -->
+		<sonar.java.source>${java.version}</sonar.java.source>
+		<sonar.projectName>${project.name}</sonar.projectName>
+		<sonar.dependencyCheck.htmlReportPath>target/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
+		<sonar.dependencyCheck.jsonReportPath>target/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Quarkus -->
+			<!-- https://quarkus.io -->
+			<!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-bom -->
+			<dependency>
+				<groupId>io.quarkus.platform</groupId>
+				<artifactId>quarkus-bom</artifactId>
+				<version>${version.quarkus}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Wicket -->
+			<!-- https://wicket.apache.org -->
+			<!-- https://mvnrepository.com/artifact/org.apache.wicket/wicket-core -->
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-core</artifactId>
+				<version>${version.wicket}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-tester</artifactId>
+				<version>${version.wicket}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- Wicket Optional -->
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-extensions</artifactId>
+				<version>${version.wicket}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-cdi</artifactId>
+				<version>${version.wicket}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.wicket</groupId>
+				<artifactId>wicket-auth-roles</artifactId>
+				<version>${version.wicket}</version>
+			</dependency>
+
+			<!-- Wicket Bootstrap -->
+			<!-- https://github.com/l0rdn1kk0n/wicket-bootstrap -->
+			<!-- https://mvnrepository.com/artifact/de.agilecoders.wicket/wicket-bootstrap-core -->
+			<dependency>
+				<groupId>de.agilecoders.wicket</groupId>
+				<artifactId>wicket-bootstrap-core</artifactId>
+				<version>${version.wicket.bootstrap}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.agilecoders.wicket</groupId>
+				<artifactId>wicket-bootstrap-extensions</artifactId>
+				<version>${version.wicket.bootstrap}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.agilecoders.wicket</groupId>
+				<artifactId>wicket-bootstrap-themes</artifactId>
+				<version>${version.wicket.bootstrap}</version>
+			</dependency>
+
+			<!-- WicketStuff -->
+			<!-- https://wicketstuff.org -->
+			<!-- https://mvnrepository.com/artifact/org.wicketstuff/wicketstuff-select2 -->
+			<dependency>
+				<groupId>org.wicketstuff</groupId>
+				<artifactId>wicketstuff-select2</artifactId>
+				<version>${version.wicketstuff}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Quarkus -->
+		<!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-undertow -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-junit5 -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Wicket -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-tester</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Wicket Bootstrap -->
+		<dependency>
+			<groupId>de.agilecoders.wicket</groupId>
+			<artifactId>wicket-bootstrap-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.agilecoders.wicket</groupId>
+			<artifactId>wicket-bootstrap-themes</artifactId>
+		</dependency>
+
+		<!-- Bootstrap Icons -->
+		<!-- https://icons.getbootstrap.com -->
+		<!-- https://mvnrepository.com/artifact/org.webjars.npm/bootstrap-icons -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>bootstrap-icons</artifactId>
+			<version>${version.bootstrap-icons}</version>
+		</dependency>
+
+		<!-- Classgraph -->
+		<!-- https://github.com/classgraph/classgraph -->
+		<!-- https://mvnrepository.com/artifact/io.github.classgraph/classgraph -->
+		<dependency>
+			<groupId>io.github.classgraph</groupId>
+			<artifactId>classgraph</artifactId>
+			<version>${version.classgraph}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- MapStruct -->
+		<!-- https://mapstruct.org -->
+		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${version.mapstruct}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<testResources>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
+
+		<pluginManagement>
+			<plugins>
+				<!-- Quarkus -->
+				<!-- https://quarkus.io/guides/quarkus-maven-plugin -->
+				<!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-maven-plugin -->
+				<plugin>
+					<groupId>io.quarkus.platform</groupId>
+					<artifactId>quarkus-maven-plugin</artifactId>
+					<version>${version.quarkus}</version>
+					<extensions>true</extensions>
+					<executions>
+						<execution>
+							<goals>
+								<goal>build</goal>
+								<goal>generate-code</goal>
+								<goal>generate-code-tests</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- Resources -->
+				<!-- https://maven.apache.org/plugins/maven-resources-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${version.resources.plugin}</version>
+					<configuration>
+						<propertiesEncoding>${project.encoding}</propertiesEncoding>
+					</configuration>
+				</plugin>
+
+				<!-- Compiler -->
+				<!-- https://maven.apache.org/plugins/maven-compiler-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.compiler.plugin}</version>
+					<configuration>
+						<release>${java.version}</release>
+						<encoding>${project.encoding}</encoding>
+						<showWarnings>true</showWarnings>
+						<showDeprecation>true</showDeprecation>
+						<compilerArgs>
+							<arg>-parameters</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
+
+				<!-- Surefire -->
+				<!-- https://maven.apache.org/surefire/maven-surefire-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.surefire.plugin}</version>
+					<configuration>
+						<skipTests>${skipUTs}</skipTests>
+						<systemPropertyVariables>
+							<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+							<!--suppress UnresolvedMavenProperty -->
+							<maven.home>${maven.home}</maven.home>
+						</systemPropertyVariables>
+					</configuration>
+				</plugin>
+
+				<!-- Failsafe -->
+				<!-- https://maven.apache.org/surefire/maven-failsafe-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${version.failsafe.plugin}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<skipTests>${skipITs}</skipTests>
+						<systemPropertyVariables>
+							<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+							<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+							<!--suppress UnresolvedMavenProperty -->
+							<maven.home>${maven.home}</maven.home>
+						</systemPropertyVariables>
+					</configuration>
+				</plugin>
+
+				<!-- JaCoCo (Code Coverage) -->
+				<!-- https://www.jacoco.org/ -->
+				<!-- https://www.jacoco.org/jacoco/trunk/doc/maven.html -->
+				<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${version.jacoco.plugin}</version>
+					<executions>
+						<execution>
+							<id>default-prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-report</id>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- Source -->
+				<!-- https://maven.apache.org/plugins/maven-source-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${version.source.plugin}</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- JavaDoc -->
+				<!-- https://maven.apache.org/plugins/maven-javadoc-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${version.javadoc.plugin}</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<noqualifier>all</noqualifier>
+						<failOnError>false</failOnError>
+						<doclint>none</doclint>
+						<show>protected</show>
+					</configuration>
+				</plugin>
+
+				<!-- GitFlow -->
+				<!-- https://github.com/aleksandr-m/gitflow-maven-plugin -->
+				<!-- https://mvnrepository.com/artifact/com.amashchenko.maven.plugin/gitflow-maven-plugin -->
+				<plugin>
+					<groupId>com.amashchenko.maven.plugin</groupId>
+					<artifactId>gitflow-maven-plugin</artifactId>
+					<version>${version.gitflow.plugin}</version>
+					<configuration>
+						<installProject>false</installProject>
+						<fetchRemote>false</fetchRemote>
+						<pushRemote>false</pushRemote><!-- Set to "true" in Projects with Remote Repository -->
+						<gitFlowConfig>
+							<productionBranch>main</productionBranch>
+							<developmentBranch>develop</developmentBranch>
+							<featureBranchPrefix>feature-</featureBranchPrefix>
+							<releaseBranchPrefix>release-</releaseBranchPrefix>
+							<hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+							<supportBranchPrefix>support-</supportBranchPrefix>
+							<versionTagPrefix />
+							<origin>origin</origin>
+						</gitFlowConfig>
+						<commitMessages>
+							<releaseStartMessage>Update versions for release to @{version}</releaseStartMessage>
+							<releaseFinishMessage>Update for next development version to @{version}</releaseFinishMessage>
+						</commitMessages>
+					</configuration>
+				</plugin>
+
+				<!-- Sonar -->
+				<!-- https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-maven -->
+				<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+				<!-- https://github.com/SonarSecurityCommunity/dependency-check-sonar-plugin/tree/master/examples/multi-module-maven -->
+				<!-- Aufruf z.B. über: "mvn sonar:sonar" -->
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>${version.sonar.plugin}</version>
+				</plugin>
+
+				<!-- Dependency Check (OWASP) -->
+				<!-- https://jeremylong.github.io/DependencyCheck/dependency-check-maven/index.html -->
+				<!-- https://mvnrepository.com/artifact/org.owasp/dependency-check-maven -->
+				<!-- Aufruf z.B. über: "mvn dependency-check:aggregate" -->
+				<plugin>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>${version.owasp.plugin}</version>
+					<configuration>
+						<formats>
+							<format>html</format>
+							<format>json</format>
+						</formats>
+						<archiveAnalyzerEnabled>false</archiveAnalyzerEnabled>
+					</configuration>
+				</plugin>
+
+				<!-- Versions -->
+				<!-- https://www.mojohaus.org/versions-maven-plugin/index.html -->
+				<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
+				<!-- Aufruf z.B. über "mvn versions:display-property-updates" -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${version.versions.plugin}</version>
+					<configuration>
+						<!--suppress UnresolvedMavenProperty -->
+						<rulesUri>file:///${session.executionRootDirectory}/maven-version-rules.xml</rulesUri>
+						<!-- Nachfolgende Versionen kommen aus dem Container und sind somit fix.-->
+						<excludeProperties />
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- Quarkus -->
+			<plugin>
+				<groupId>io.quarkus.platform</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+
+			<!-- Compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${version.mapstruct}</version>
+						</path>
+					</annotationProcessorPaths>
+					<annotationProcessors>
+						<processor>org.mapstruct.ap.MappingProcessor</processor>
+					</annotationProcessors>
+					<compilerArgs>
+						<arg>-Amapstruct.unmappedTargetPolicy=ERROR</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+
+			<!-- Surefire -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+
+			<!-- Failsafe -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+
+			<!-- JaCoCo (Code Coverage) -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Source -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+
+			<!-- JavaDoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+
+			<!-- GitFlow -->
+			<plugin>
+				<groupId>com.amashchenko.maven.plugin</groupId>
+				<artifactId>gitflow-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>native</id>
+			<activation>
+				<property>
+					<name>native</name>
+				</property>
+			</activation>
+			<properties>
+				<skipITs>false</skipITs>
+				<quarkus.native.enabled>true</quarkus.native.enabled>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

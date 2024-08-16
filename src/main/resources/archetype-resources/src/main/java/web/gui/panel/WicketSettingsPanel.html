@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="de">
+<head>
+	<title>Wicket Settings Panel</title>
+</head>
+<body>
+	<wicket:panel>
+		<h3 id="wicketSettings">Wicket Settings</h3>
+		<table class="table-condensed" aria-describedby="wicketSettings">
+			<tr><th scope="row">Wicket Version:</th><td><span wicket:id="wicketVersion"></span></td></tr>
+			<tr><th scope="row">Bootstrap Version:</th><td><span wicket:id="bootstrapVersion"></span></td></tr>
+			<tr><th scope="row">Bootstrap Theme:</th><td><span wicket:id="bootstrapTheme"></span></td></tr>
+		</table>
+	</wicket:panel>
+</body>
+</html>
