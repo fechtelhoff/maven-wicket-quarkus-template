@@ -31,16 +31,16 @@
 		<!-- Dependencies -->
 		<!-- =================================================================================== -->
 		<!-- Quarkus -->
-		<version.quarkus>3.13.2</version.quarkus>
+		<version.quarkus>3.17.3</version.quarkus>
 
 		<!-- General -->
-		<version.classgraph>4.8.174</version.classgraph>
-		<version.mapstruct>1.6.0</version.mapstruct>
+		<version.classgraph>4.8.179</version.classgraph>
+		<version.mapstruct>1.6.3</version.mapstruct>
 
 		<!-- Wicket & Co. -->
-		<version.wicket>10.1.0</version.wicket>
-		<version.wicketstuff>10.1.1</version.wicketstuff>
-		<version.wicket.bootstrap>7.0.5</version.wicket.bootstrap>
+		<version.wicket>10.2.0</version.wicket>
+		<version.wicketstuff>10.2.0</version.wicketstuff>
+		<version.wicket.bootstrap>7.0.8</version.wicket.bootstrap>
 		<version.bootstrap-icons>1.11.3</version.bootstrap-icons>
 
 		<!-- =================================================================================== -->
@@ -48,18 +48,18 @@
 		<!-- =================================================================================== -->
 		<!-- Maven Plugins -->
 		<version.compiler.plugin>3.13.0</version.compiler.plugin>
-		<version.failsafe.plugin>3.3.1</version.failsafe.plugin>
-		<version.javadoc.plugin>3.8.0</version.javadoc.plugin>
+		<version.failsafe.plugin>3.5.2</version.failsafe.plugin>
+		<version.javadoc.plugin>3.11.2</version.javadoc.plugin>
 		<version.resources.plugin>3.3.1</version.resources.plugin>
 		<version.source.plugin>3.3.1</version.source.plugin>
-		<version.surefire.plugin>3.3.1</version.surefire.plugin>
+		<version.surefire.plugin>3.5.2</version.surefire.plugin>
 
 		<!-- Other Plugins -->
 		<version.gitflow.plugin>1.21.0</version.gitflow.plugin>
 		<version.jacoco.plugin>0.8.12</version.jacoco.plugin>
-		<version.owasp.plugin>10.0.3</version.owasp.plugin>
-		<version.sonar.plugin>4.0.0.4121</version.sonar.plugin>
-		<version.versions.plugin>2.17.1</version.versions.plugin>
+		<version.owasp.plugin>11.1.1</version.owasp.plugin>
+		<version.sonar.plugin>5.0.0.4389</version.sonar.plugin>
+		<version.versions.plugin>2.18.0</version.versions.plugin>
 
 		<!-- =================================================================================== -->
 		<!-- Sonar -->

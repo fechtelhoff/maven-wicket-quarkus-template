@@ -25,9 +25,11 @@
 
 		<!-- Plugin / Extension Version -->
 		<version.archetype-packaging.extension>3.2.1</version.archetype-packaging.extension>
-		<version.archetype.plugin>3.2.1</version.archetype.plugin>
+		<version.archetype.plugin>3.3.1</version.archetype.plugin>
+		<version.deploy.plugin>3.1.3</version.deploy.plugin>
+		<version.install.plugin>3.1.3</version.install.plugin>
 		<version.resources.plugin>3.3.1</version.resources.plugin>
-		<version.versions.plugin>2.17.1</version.versions.plugin>
+		<version.versions.plugin>2.18.0</version.versions.plugin>
 	</properties>
 
 	<build>
@@ -57,6 +59,24 @@
 					<configuration>
 						<useDefaultExcludes>false</useDefaultExcludes>
 					</configuration>
+				</plugin>
+
+				<!-- Install -->
+				<!-- https://maven.apache.org/plugins/maven-install-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${version.install.plugin}</version>
+				</plugin>
+
+				<!-- Deploy -->
+				<!-- https://maven.apache.org/plugins/maven-deploy-plugin -->
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${version.deploy.plugin}</version>
 				</plugin>
 
 				<!-- Versions -->
