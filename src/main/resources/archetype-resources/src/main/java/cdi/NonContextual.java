@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.spi.InjectionTarget;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import io.quarkus.arc.impl.CreationalContextImpl;
 
 public class NonContextual<T> {
@@ -22,8 +23,8 @@ public class NonContextual<T> {
 
 	private NonContextual(final Class<? extends T> clazz) {
 		// mein InjectionTarget, ist die Klasse die reingegeben wird.
-		// Auf einen Cache der NonContextual Typen könnte man zurückgreifen. Ich probiers erstmal ohne. So minimalistisch wie möglich
-		final List<Field> injectableFields = Arrays.stream(clazz.getDeclaredFields())
+		// Auf einen Cache der NonContextual Typen könnte man zurückgreifen. Ich probiers erstmal ohne. So minimalistisch wie möglich.
+		final List<Field> injectableFields = Arrays.stream(FieldUtils.getAllFields(clazz))
 			.filter(field -> field.isAnnotationPresent(Inject.class))
 			.toList();
 		injectionTarget = new WicketQuarkusInjectionTarget<>(injectableFields);

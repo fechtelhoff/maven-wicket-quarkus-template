@@ -32,45 +32,19 @@ public class WicketApplication extends WebApplication {
 		super.init();
 
 		initializeCdi();
-//		initializeComponentInstantiationListeners();
 		initializeCsp();
 		initializeBootstrap();
 		initializeWebJars();
+
+		mountPages();
 	}
 
 	/**
 	 * Code Snippet from <a href="https://github.com/mattdru/wicket-quarkus-cdi">GitHub - mattdru/wicket-quarkus-cdi: CDI Quarkus Integration for Apache Wicket</a>
 	 */
 	private void initializeCdi() {
-		// Achtung: CdiConfiguration aus eigenem Package (Implementierung von Matthias Drummer) und nicht die von Wicket.
+		// Achtung: CdiConfiguration aus eigenem Package (Implementierung von mattdru) und nicht die von Wicket.
 		new CdiConfiguration().configure(this);
-	}
-
-	 /**
-	 *
-	 * Code Snippet from <a href="https://github.com/brunoborges/wicket-with-quarkus">GitHub - brunoborges/wicket-with-quarkus</a>
-	 */
-	@SuppressWarnings("unused")
-	private void initializeComponentInstantiationListeners() {
-		getComponentInstantiationListeners().add(
-			component -> Arrays.stream(component.getClass().getDeclaredFields()).forEach(
-				x -> {
-					if (x.isAnnotationPresent(Inject.class)) {
-						final var c = CDI.current().select(x.getType()).get();
-						final boolean canAccess = x.canAccess(component);
-						x.setAccessible(true);
-						try {
-							x.set(component, c);
-							Logger.getLogger("WicketApplication#init")
-								.info("injecting " + component.getClass().getSimpleName() + "#" + x.getName() + "::" + x.getType().getSimpleName());
-						} catch (final IllegalAccessException exception) {
-							throw new RuntimeException(exception);
-						}
-						x.setAccessible(canAccess);
-					}
-				}
-			)
-		);
 	}
 
 	private void initializeCsp() {
