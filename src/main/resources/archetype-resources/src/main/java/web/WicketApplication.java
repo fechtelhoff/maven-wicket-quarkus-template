@@ -1,11 +1,12 @@
 package ${package}.web;
 
-import java.util.Arrays;
-import java.util.logging.Logger;
-import jakarta.enterprise.inject.spi.CDI;
+import java.nio.charset.StandardCharsets;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import ${package}.web.cdi.ArcInjector;
+import ${package}.web.gui.HomePage;
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.agilecoders.wicket.core.settings.CookieThemeProvider;
@@ -15,12 +16,12 @@ import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.settings.WebjarsSettings;
-import ${package}.cdi.CdiConfiguration;
-import ${package}.web.gui.HomePage;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 
-@RegisterForReflection
+@Singleton
 public class WicketApplication extends WebApplication {
+
+	@Inject
+	ArcInjector injector;
 
 	@Override
 	public Class<? extends WebPage> getHomePage() {
@@ -31,24 +32,30 @@ public class WicketApplication extends WebApplication {
 	protected void init() {
 		super.init();
 
-		initializeCdi();
+		initializeUtf8();
 		initializeCsp();
+		initializeCdi();
 		initializeBootstrap();
 		initializeWebJars();
 
 		mountPages();
 	}
 
-	/**
-	 * Code Snippet from <a href="https://github.com/mattdru/wicket-quarkus-cdi">GitHub - mattdru/wicket-quarkus-cdi: CDI Quarkus Integration for Apache Wicket</a>
-	 */
-	private void initializeCdi() {
-		// Achtung: CdiConfiguration aus eigenem Package (Implementierung von mattdru) und nicht die von Wicket.
-		new CdiConfiguration().configure(this);
+	private void initializeUtf8() {
+		getMarkupSettings().setDefaultMarkupEncoding(StandardCharsets.UTF_8.name());
+		getRequestCycleSettings().setResponseRequestEncoding(StandardCharsets.UTF_8.name());
 	}
 
 	private void initializeCsp() {
 		getCspSettings().blocking().disabled();
+	}
+
+	private void initializeCdi() {
+		// ArC CDI configuration.
+		injector.bind(this);
+		getBehaviorInstantiationListeners().add(injector);
+		getComponentInstantiationListeners().add(injector);
+		getSessionListeners().add(injector);
 	}
 
 	private void initializeBootstrap() {

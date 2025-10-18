@@ -25,11 +25,11 @@
 
 		<!-- Plugin / Extension Version -->
 		<version.archetype-packaging.extension>3.2.1</version.archetype-packaging.extension>
-		<version.archetype.plugin>3.4.0</version.archetype.plugin>
+		<version.archetype.plugin>3.4.1</version.archetype.plugin>
 		<version.deploy.plugin>3.1.4</version.deploy.plugin>
 		<version.install.plugin>3.1.4</version.install.plugin>
 		<version.resources.plugin>3.3.1</version.resources.plugin>
-		<version.versions.plugin>2.18.0</version.versions.plugin>
+		<version.versions.plugin>2.19.1</version.versions.plugin>
 	</properties>
 
 	<build>
